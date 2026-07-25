@@ -1,4 +1,20 @@
-// ===========================
+// Splash Screen
+
+window.addEventListener("load",()=>{
+
+setTimeout(()=>{
+
+const splash=document.getElementById("splash-screen");
+
+if(splash){
+
+splash.style.display="none";
+
+}
+
+},2500);
+
+});// ===========================
 // MKAI PLATFORM V2
 // Navigation + interactions
 // ===========================
