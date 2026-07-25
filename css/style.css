@@ -5,69 +5,116 @@
     font-family:Arial, sans-serif;
 }
 
+
 body{
+
     background:#f8fafc;
     color:#111827;
+
 }
 
+
+
 .app{
+
     max-width:480px;
     margin:auto;
     min-height:100vh;
-    padding-bottom:80px;
+    padding-bottom:90px;
+
 }
+
 
 
 /* HEADER */
 
 .header{
+
     display:flex;
     justify-content:space-between;
     align-items:center;
     padding:20px;
+
 }
+
 
 .logo{
-    font-size:24px;
-    font-weight:800;
+
+    font-size:26px;
+    font-weight:900;
     color:#2563eb;
+
 }
+
+
 
 .header-icons button{
+
     border:none;
     background:white;
-    font-size:20px;
-    margin-left:10px;
     padding:10px;
     border-radius:50%;
+    margin-left:8px;
+    font-size:18px;
+
 }
 
 
 
-/* WELCOME CARD */
+
+
+/* PAGES */
+
+.page{
+
+    display:none;
+    padding:15px;
+
+}
+
 
 .home{
-    padding:15px;
+
+    display:block;
+
 }
 
+
+
+
+
+
+/* WELCOME */
+
 .welcome-card{
+
     background:linear-gradient(135deg,#2563eb,#7c3aed);
     color:white;
     padding:25px;
     border-radius:25px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+
 }
+
+
 
 .welcome-card h2{
+
     margin-bottom:10px;
+
 }
+
 
 .welcome-card p{
+
     line-height:1.5;
-    opacity:.9;
+
 }
 
+
+
 .primary-btn{
+
     margin-top:20px;
     padding:14px 20px;
     border:none;
@@ -75,51 +122,195 @@ body{
     background:white;
     color:#2563eb;
     font-weight:bold;
+
 }
 
 
-/* OUTILS */
 
-.home h3{
+
+
+
+/* OUTILS IA */
+
+h3{
+
     margin:25px 0 15px;
+
 }
+
 
 
 .tools-grid{
+
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:15px;
+
 }
 
 
+
 .tool-card{
+
     background:white;
     padding:20px;
     border-radius:22px;
     box-shadow:0 5px 15px rgba(0,0,0,.08);
+
 }
 
 
+
 .tool-card span{
+
     font-size:30px;
+
 }
 
 
 .tool-card h4{
+
     margin:10px 0;
+
 }
 
 
 .tool-card p{
+
     font-size:13px;
     color:#64748b;
+
 }
+
+
+
+
+
+
+/* CHAT */
+
+.chat-page{
+
+    height:calc(100vh - 160px);
+
+}
+
+
+
+.chat-header{
+
+    margin-bottom:20px;
+
+}
+
+
+
+.chat-messages{
+
+    height:65vh;
+    overflow-y:auto;
+
+}
+
+
+
+.message{
+
+    max-width:80%;
+    padding:15px;
+    border-radius:20px;
+    margin-bottom:15px;
+    line-height:1.5;
+
+}
+
+
+
+.mkai{
+
+    background:white;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+
+
+.user{
+
+    background:#2563eb;
+    color:white;
+    margin-left:auto;
+
+}
+
+
+
+
+.chat-input{
+
+    position:fixed;
+    bottom:75px;
+    left:50%;
+    transform:translateX(-50%);
+    width:90%;
+    max-width:450px;
+    display:flex;
+    gap:10px;
+
+}
+
+
+
+.chat-input input{
+
+    flex:1;
+    padding:15px;
+    border-radius:30px;
+    border:1px solid #ddd;
+
+}
+
+
+
+.chat-input button{
+
+    width:50px;
+    border:none;
+    border-radius:50%;
+    background:#2563eb;
+    color:white;
+    font-size:20px;
+
+}
+
+
+
+
+
+
+/* AUTRES PAGES */
+
+.images-page,
+.academy-page,
+.profile-page{
+
+    background:white;
+    margin:15px;
+    border-radius:25px;
+    padding:25px;
+
+}
+
+
+
+
 
 
 
 /* NAVIGATION */
 
 .bottom-nav{
+
     position:fixed;
     bottom:0;
     left:50%;
@@ -131,14 +322,19 @@ body{
     justify-content:space-around;
     padding:12px 5px;
     box-shadow:0 -5px 20px rgba(0,0,0,.1);
+
 }
 
 
+
 .bottom-nav button{
+
     border:none;
     background:none;
     display:flex;
     flex-direction:column;
+    align-items:center;
     font-size:12px;
     gap:4px;
-  }
+
+        }
