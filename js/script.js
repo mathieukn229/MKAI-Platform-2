@@ -1,83 +1,79 @@
-// Splash Screen
+/* ==========================
+   MKAI V2 - SCRIPT COMPLET
+========================== */
 
-window.addEventListener("load",()=>{
 
-setTimeout(()=>{
+const input = document.getElementById("user-input");
+const sendBtn = document.getElementById("send-btn");
+const chatBox = document.getElementById("chat-box");
 
-const splash=document.getElementById("splash-screen");
 
-if(splash){
 
-splash.style.display="none";
+
+// Ajouter un message dans le chat
+
+function addMessage(text, type){
+
+    const message = document.createElement("div");
+
+    message.classList.add("message");
+    message.classList.add(type);
+
+    message.innerText = text;
+
+    chatBox.appendChild(message);
+
+    chatBox.scrollTop = chatBox.scrollHeight;
 
 }
 
-},2500);
-
-});// ===========================
-// MKAI PLATFORM V2
-// Navigation + interactions
-// ===========================
 
 
-// Récupération des pages
-
-const pages = document.querySelectorAll(".page");
 
 
-// Boutons navigation
+// Réponses simples MKAI
 
-const navButtons = document.querySelectorAll(".bottom-nav button");
+function getMKAIResponse(message){
 
-
-// Fonction pour afficher une page
-
-function showPage(index){
-
-    pages.forEach(page => {
-        page.style.display = "none";
-    });
+    let text = message.toLowerCase();
 
 
-    if(pages[index]){
+    if(text.includes("bonjour") || text.includes("salut")){
 
-        pages[index].style.display = "block";
+        return "Bonjour 👋 Je suis MKAI. Je peux t'aider avec le business, la création de contenu, l'IA et tes projets.";
 
     }
 
-}
+
+    if(text.includes("business")){
+
+        return "🚀 Pour développer un business, commence par identifier un problème, créer une solution simple et utiliser l'IA pour gagner du temps.";
+
+    }
 
 
+    if(text.includes("contenu")){
 
-// Navigation du bas
+        return "✍️ Je peux t'aider à créer des publications Facebook, TikTok, scripts vidéos et idées de contenu.";
 
-navButtons.forEach((button,index)=>{
-
-
-    button.addEventListener("click",()=>{
-
-        showPage(index);
-
-    });
+    }
 
 
-});
+    if(text.includes("ia") || text.includes("intelligence artificielle")){
+
+        return "🤖 L'IA peut t'aider à créer des images, écrire, analyser un projet et automatiser certaines tâches.";
+
+    }
 
 
+    if(text.includes("code") || text.includes("site")){
+
+        return "💻 Je peux t'accompagner pour créer des sites web, corriger du code et développer tes projets.";
+
+    }
 
 
-// Bouton commencer conversation
-
-const startButton = document.querySelector(".primary-btn");
-
-
-if(startButton){
-
-    startButton.addEventListener("click",()=>{
-
-        showPage(1);
-
-    });
+    return "Je réfléchis... 🤔 Ta demande est intéressante. Donne-moi plus de détails pour mieux t'aider.";
 
 }
 
@@ -85,79 +81,69 @@ if(startButton){
 
 
 
-// Cartes outils IA
 
-const toolCards = document.querySelectorAll(".tool-card");
+// Envoyer message
 
+function sendMessage(){
 
-toolCards.forEach(card=>{
-
-
-    card.addEventListener("click",()=>{
+    const message = input.value.trim();
 
 
-        const title = card.querySelector("h4").innerText;
+    if(message === ""){
 
+        return;
 
-        if(title.includes("Images")){
-
-            showPage(2);
-
-        }
-
-
-        else if(title.includes("Academy")){
-
-            showPage(3);
-
-        }
-
-
-        else if(title.includes("Business")){
-
-            showPage(1);
-
-        }
-
-
-        else{
-
-            showPage(1);
-
-        }
+    }
 
 
 
-    });
+    addMessage(message,"user");
+
+
+    input.value="";
 
 
 
-});
+    // effet réflexion
+
+    const loading = document.createElement("div");
+
+    loading.classList.add("message");
+    loading.classList.add("bot");
+
+    loading.innerText="MKAI réfléchit... 🤔";
+
+    chatBox.appendChild(loading);
+
+
+
+    setTimeout(()=>{
+
+
+        loading.remove();
+
+
+        const response = getMKAIResponse(message);
+
+
+        addMessage(response,"bot");
+
+
+
+    },1500);
+
+
+
+}
 
 
 
 
-
-// ===========================
-// CHAT MKAI
-// ===========================
-
-
-const sendBtn = document.getElementById("sendBtn");
-
-const messageInput = document.getElementById("messageInput");
-
-const chatMessages = document.querySelector(".chat-messages");
+sendBtn.addEventListener("click",sendMessage);
 
 
 
-if(sendBtn){
-
-
-sendBtn.addEventListener("click", sendMessage);
-
-
-messageInput.addEventListener("keypress",(e)=>{
+input.addEventListener("keypress",function(e){
 
     if(e.key==="Enter"){
 
@@ -168,98 +154,50 @@ messageInput.addEventListener("keypress",(e)=>{
 });
 
 
-}
-
-
-
-
-function sendMessage(){
-
-
-    const text = messageInput.value.trim();
-
-
-    if(text==="") return;
-
-
-
-    // Message utilisateur
-
-    const user = document.createElement("div");
-
-    user.className="message user";
-
-    user.innerText=text;
-
-
-    chatMessages.appendChild(user);
-
-
-
-    messageInput.value="";
-
-
-
-    // Réflexion MKAI
-
-    const bot = document.createElement("div");
-
-    bot.className="message mkai";
-
-    bot.innerText="MKAI réfléchit... 🤖";
-
-
-    chatMessages.appendChild(bot);
-
-
-
-    setTimeout(()=>{
-
-
-        bot.innerText = getResponse(text);
-
-
-    },1200);
-
-
-
-}
 
 
 
 
 
-function getResponse(message){
+// Bouton principal
+
+const mainBtn = document.querySelector(".main-btn");
 
 
-    message = message.toLowerCase();
+mainBtn.addEventListener("click",()=>{
 
+    input.focus();
 
-
-    if(message.includes("bonjour")){
-
-        return "Bonjour Mathieu 👋 Je suis MKAI, ton assistant IA.";
-
-    }
-
-
-
-    if(message.includes("business")){
-
-        return "Je peux t'aider à trouver une idée de business adaptée à ton profil.";
-
-    }
+});
 
 
 
-    if(message.includes("contenu")){
-
-        return "Je peux créer des scripts, publications et stratégies marketing.";
-
-    }
 
 
 
-    return "Je suis en évolution 🚀 Bientôt connecté à une intelligence artificielle avancée.";
 
-} 
+// Actions des outils IA
+
+
+const tools = document.querySelectorAll(".tool-card");
+
+
+tools.forEach(tool=>{
+
+
+    tool.addEventListener("click",()=>{
+
+
+        const title = tool.querySelector("h4").innerText;
+
+
+        input.value = "Aide-moi avec : " + title;
+
+
+        input.focus();
+
+
+    });
+
+
+});
