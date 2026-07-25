@@ -1,81 +1,209 @@
+// ===========================
 // MKAI PLATFORM V2
-// Fonction Chat
+// Navigation + interactions
+// ===========================
 
 
-const sendBtn = document.getElementById("sendBtn");
-const messageInput = document.getElementById("messageInput");
-const chatMessages = document.querySelector(".chat-messages");
+// Récupération des pages
+
+const pages = document.querySelectorAll(".page");
 
 
-// Envoyer un message
+// Boutons navigation
 
-sendBtn.addEventListener("click", sendMessage);
+const navButtons = document.querySelectorAll(".bottom-nav button");
 
 
-messageInput.addEventListener("keypress", function(e){
+// Fonction pour afficher une page
 
-    if(e.key === "Enter"){
-        sendMessage();
+function showPage(index){
+
+    pages.forEach(page => {
+        page.style.display = "none";
+    });
+
+
+    if(pages[index]){
+
+        pages[index].style.display = "block";
+
     }
+
+}
+
+
+
+// Navigation du bas
+
+navButtons.forEach((button,index)=>{
+
+
+    button.addEventListener("click",()=>{
+
+        showPage(index);
+
+    });
+
 
 });
 
 
 
+
+// Bouton commencer conversation
+
+const startButton = document.querySelector(".primary-btn");
+
+
+if(startButton){
+
+    startButton.addEventListener("click",()=>{
+
+        showPage(1);
+
+    });
+
+}
+
+
+
+
+
+// Cartes outils IA
+
+const toolCards = document.querySelectorAll(".tool-card");
+
+
+toolCards.forEach(card=>{
+
+
+    card.addEventListener("click",()=>{
+
+
+        const title = card.querySelector("h4").innerText;
+
+
+        if(title.includes("Images")){
+
+            showPage(2);
+
+        }
+
+
+        else if(title.includes("Academy")){
+
+            showPage(3);
+
+        }
+
+
+        else if(title.includes("Business")){
+
+            showPage(1);
+
+        }
+
+
+        else{
+
+            showPage(1);
+
+        }
+
+
+
+    });
+
+
+
+});
+
+
+
+
+
+// ===========================
+// CHAT MKAI
+// ===========================
+
+
+const sendBtn = document.getElementById("sendBtn");
+
+const messageInput = document.getElementById("messageInput");
+
+const chatMessages = document.querySelector(".chat-messages");
+
+
+
+if(sendBtn){
+
+
+sendBtn.addEventListener("click", sendMessage);
+
+
+messageInput.addEventListener("keypress",(e)=>{
+
+    if(e.key==="Enter"){
+
+        sendMessage();
+
+    }
+
+});
+
+
+}
+
+
+
+
 function sendMessage(){
 
-    const message = messageInput.value.trim();
+
+    const text = messageInput.value.trim();
 
 
-    if(message === ""){
-        return;
-    }
+    if(text==="") return;
 
 
 
     // Message utilisateur
 
-    const userMessage = document.createElement("div");
+    const user = document.createElement("div");
 
-    userMessage.className = "message user";
+    user.className="message user";
 
-    userMessage.innerText = message;
-
-
-    chatMessages.appendChild(userMessage);
+    user.innerText=text;
 
 
-
-    messageInput.value = "";
+    chatMessages.appendChild(user);
 
 
 
-    // Animation MKAI réfléchit
-
-    const thinking = document.createElement("div");
-
-    thinking.className = "message mkai";
-
-    thinking.innerText = "MKAI réfléchit... 🤖";
-
-
-    chatMessages.appendChild(thinking);
+    messageInput.value="";
 
 
 
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+    // Réflexion MKAI
+
+    const bot = document.createElement("div");
+
+    bot.className="message mkai";
+
+    bot.innerText="MKAI réfléchit... 🤖";
 
 
+    chatMessages.appendChild(bot);
 
-    // Réponse temporaire
+
 
     setTimeout(()=>{
 
 
-        thinking.innerText = getMKAIResponse(message);
+        bot.innerText = getResponse(text);
 
 
-    },1500);
+    },1200);
 
 
 
@@ -84,9 +212,8 @@ function sendMessage(){
 
 
 
-// Réponses de test
 
-function getMKAIResponse(message){
+function getResponse(message){
 
 
     message = message.toLowerCase();
@@ -95,9 +222,10 @@ function getMKAIResponse(message){
 
     if(message.includes("bonjour")){
 
-        return "Bonjour Mathieu 👋 Je suis MKAI, prêt à t'aider.";
+        return "Bonjour Mathieu 👋 Je suis MKAI, ton assistant IA.";
 
     }
+
 
 
     if(message.includes("business")){
@@ -107,14 +235,15 @@ function getMKAIResponse(message){
     }
 
 
+
     if(message.includes("contenu")){
 
-        return "Je peux créer des idées de posts, scripts et stratégies marketing.";
+        return "Je peux créer des scripts, publications et stratégies marketing.";
 
     }
 
 
 
-    return "Je suis encore en apprentissage, mais bientôt je serai connecté à une vraie intelligence artificielle.";
+    return "Je suis en évolution 🚀 Bientôt connecté à une intelligence artificielle avancée.";
 
-}
+} 
