@@ -1,1 +1,144 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
 
+body{
+    background:#f8fafc;
+    color:#111827;
+}
+
+.app{
+    max-width:480px;
+    margin:auto;
+    min-height:100vh;
+    padding-bottom:80px;
+}
+
+
+/* HEADER */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:800;
+    color:#2563eb;
+}
+
+.header-icons button{
+    border:none;
+    background:white;
+    font-size:20px;
+    margin-left:10px;
+    padding:10px;
+    border-radius:50%;
+}
+
+
+
+/* WELCOME CARD */
+
+.home{
+    padding:15px;
+}
+
+.welcome-card{
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    color:white;
+    padding:25px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.welcome-card h2{
+    margin-bottom:10px;
+}
+
+.welcome-card p{
+    line-height:1.5;
+    opacity:.9;
+}
+
+.primary-btn{
+    margin-top:20px;
+    padding:14px 20px;
+    border:none;
+    border-radius:30px;
+    background:white;
+    color:#2563eb;
+    font-weight:bold;
+}
+
+
+/* OUTILS */
+
+.home h3{
+    margin:25px 0 15px;
+}
+
+
+.tools-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+
+.tool-card{
+    background:white;
+    padding:20px;
+    border-radius:22px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+
+.tool-card span{
+    font-size:30px;
+}
+
+
+.tool-card h4{
+    margin:10px 0;
+}
+
+
+.tool-card p{
+    font-size:13px;
+    color:#64748b;
+}
+
+
+
+/* NAVIGATION */
+
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:480px;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    padding:12px 5px;
+    box-shadow:0 -5px 20px rgba(0,0,0,.1);
+}
+
+
+.bottom-nav button{
+    border:none;
+    background:none;
+    display:flex;
+    flex-direction:column;
+    font-size:12px;
+    gap:4px;
+  }
