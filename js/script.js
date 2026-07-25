@@ -123,11 +123,40 @@ function sendMessage(){
         loading.remove();
 
 
-        const response = getMKAIResponse(message);
+        fetch("/api/chat",{
 
+    method:"POST",
 
-        addMessage(response,"bot");
+    headers:{
+        "Content-Type":"application/json"
+    },
 
+    body:JSON.stringify({
+        message:message
+    })
+
+})
+
+.then(res=>res.json())
+
+.then(data=>{
+
+    loading.remove();
+
+    addMessage(data.reply,"bot");
+
+})
+
+.catch(()=>{
+
+    loading.remove();
+
+    addMessage(
+    "Une erreur est survenue. Réessaie plus tard.",
+    "bot"
+    );
+
+});
 
 
     },1500);
