@@ -18,6 +18,13 @@ export default async function handler(req, res) {
 
     const apiKey = process.env.GEMINI_API_KEY;
 
+    if (!apiKey) {
+      return res.status(500).json({
+        error: "Clé GEMINI_API_KEY introuvable dans Vercel"
+      });
+    }
+
+
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
       {
@@ -30,12 +37,7 @@ export default async function handler(req, res) {
             {
               parts: [
                 {
-                  text: `Tu es MKAI, un assistant IA intelligent spécialisé dans l'entrepreneuriat, la création de contenu, le digital et l'intelligence artificielle en Afrique francophone.
-
-Réponds de manière claire, simple et utile.
-
-Question de l'utilisateur :
-${message}`
+                  text: message
                 }
               ]
             }
@@ -48,20 +50,19 @@ ${message}`
     const data = await response.json();
 
 
-    if (data.error) {
+    console.log(data);
+
+
+    if (!response.ok) {
       return res.status(500).json({
-        error: data.error.message
+        error: JSON.stringify(data)
       });
     }
 
 
-    const answer =
-      data.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "Je n'ai pas trouvé de réponse.";
-
-
     res.status(200).json({
-      reply: answer
+      reply:
+        data.candidates[0].content.parts[0].text
     });
 
 
@@ -73,4 +74,4 @@ ${message}`
 
   }
 
-}
+        }
