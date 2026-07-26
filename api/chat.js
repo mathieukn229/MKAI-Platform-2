@@ -10,47 +10,67 @@ export default async function handler(req, res) {
 
     const { message } = req.body;
 
+    if (!message) {
+      return res.status(400).json({
+        error: "Message manquant"
+      });
+    }
+
+    const apiKey = process.env.GEMINI_API_KEY;
+
     const response = await fetch(
-      "https://api.openai.com/v1/chat/completions",
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "gpt-4.1-mini",
-          messages: [
+          contents: [
             {
-              role: "system",
-              content: "Tu es MKAI, un assistant IA spécialisé en business, création de contenu, intelligence artificielle et entrepreneuriat en Afrique francophone."
-            },
-            {
-              role: "user",
-              content: message
+              parts: [
+                {
+                  text: `Tu es MKAI, un assistant IA intelligent spécialisé dans l'entrepreneuriat, la création de contenu, le digital et l'intelligence artificielle en Afrique francophone.
+
+Réponds de manière claire, simple et utile.
+
+Question de l'utilisateur :
+${message}`
+                }
+              ]
             }
           ]
         })
       }
     );
 
+
     const data = await response.json();
 
-    if (!response.ok) {
-      return res.status(response.status).json({
-        reply: JSON.stringify(data)
+
+    if (data.error) {
+      return res.status(500).json({
+        error: data.error.message
       });
     }
 
-    return res.status(200).json({
-      reply: data.choices[0].message.content
+
+    const answer =
+      data.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "Je n'ai pas trouvé de réponse.";
+
+
+    res.status(200).json({
+      reply: answer
     });
+
 
   } catch (error) {
 
-    return res.status(500).json({
-      reply: error.message
+    res.status(500).json({
+      error: error.message
     });
 
   }
-                                     }
+
+}
