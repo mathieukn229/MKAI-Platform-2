@@ -1,5 +1,5 @@
 /* ==========================
-   MKAI V2 - SCRIPT OPENAI
+   MKAI V2 - SCRIPT GEMINI
 ========================== */
 
 
@@ -9,7 +9,7 @@ const chatBox = document.getElementById("chat-box");
 
 
 
-// Ajouter message
+// Ajouter un message dans le chat
 
 function addMessage(text, type){
 
@@ -35,33 +35,32 @@ function addMessage(text, type){
 async function sendMessage(){
 
 
-    const message = input.value.trim();
+    const userMessage = input.value.trim();
 
 
-    if(message === ""){
-
+    if(userMessage === ""){
         return;
-
     }
 
 
 
-    addMessage(message,"user");
+    // Message utilisateur
+
+    addMessage(userMessage, "user");
 
 
     input.value = "";
 
 
 
-    const loading = document.createElement("div");
+    // Animation réflexion
 
+    const loading = document.createElement("div");
 
     loading.classList.add("message");
     loading.classList.add("bot");
 
-
     loading.innerText = "MKAI réfléchit... 🤔";
-
 
     chatBox.appendChild(loading);
 
@@ -70,20 +69,20 @@ async function sendMessage(){
     try{
 
 
-        const response = await fetch("/api/chat",{
+        const response = await fetch("/api/chat", {
 
-            method:"POST",
+            method: "POST",
 
-            headers:{
+            headers: {
 
-                "Content-Type":"application/json"
+                "Content-Type": "application/json"
 
             },
 
 
-            body:JSON.stringify({
+            body: JSON.stringify({
 
-                message:message
+                message: userMessage
 
             })
 
@@ -99,16 +98,26 @@ async function sendMessage(){
 
 
 
+        // Réponse IA
+
         if(data.reply){
 
-            addMessage(data.reply,"bot");
+
+            addMessage(
+                data.reply,
+                "bot"
+            );
+
 
         }else{
 
+
             addMessage(
-                "Désolé, je n'ai pas reçu de réponse.",
+                "Erreur MKAI : " + 
+                (data.error || "Aucune réponse reçue"),
                 "bot"
             );
+
 
         }
 
@@ -121,7 +130,7 @@ async function sendMessage(){
 
 
         addMessage(
-            "Erreur de connexion avec MKAI. Vérifie ton serveur.",
+            "Erreur de connexion : " + error.message,
             "bot"
         );
 
@@ -137,35 +146,46 @@ async function sendMessage(){
 
 // Bouton envoyer
 
-sendBtn.addEventListener(
-    "click",
-    sendMessage
-);
+if(sendBtn){
+
+    sendBtn.addEventListener(
+        "click",
+        sendMessage
+    );
+
+}
 
 
 
 
-// Touche Entrée
 
-input.addEventListener(
-    "keypress",
-    function(e){
+// Envoyer avec Entrée
 
-        if(e.key === "Enter"){
+if(input){
 
-            sendMessage();
+    input.addEventListener(
+        "keypress",
+        function(e){
+
+
+            if(e.key === "Enter"){
+
+                sendMessage();
+
+            }
+
 
         }
+    );
 
-    }
-);
-
-
+}
 
 
 
 
-// Bouton principal
+
+
+// Bouton principal de la page
 
 const mainBtn = document.querySelector(".main-btn");
 
@@ -174,7 +194,7 @@ if(mainBtn){
 
     mainBtn.addEventListener(
         "click",
-        ()=>{
+        function(){
 
             input.focus();
 
@@ -188,7 +208,7 @@ if(mainBtn){
 
 
 
-// Actions outils IA
+// Cartes outils IA
 
 const tools = document.querySelectorAll(".tool-card");
 
@@ -198,7 +218,7 @@ tools.forEach(tool=>{
 
     tool.addEventListener(
         "click",
-        ()=>{
+        function(){
 
 
             const title = tool.querySelector("h4").innerText;
